@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { font-family: Arial; margin: 0; padding: 10px; background:#f4f4f4; }
+    h2,h3 { margin:5px 0; }
+    .container { display:flex; gap:20px; max-width:1200px; margin:auto; }
+    .left, .right { flex:1; background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    .row { margin-bottom:10px; display:flex; align-items:center; gap:5px; }
+    input, select { padding:4px; border-radius:4px; border:1px solid #ccc; }
+    button { padding:5px 10px; border:none; border-radius:4px; background:#0077cc; color:#fff; cursor:pointer; }
+    button:hover { background:#005fa3; }
+    .warn { color:red; font-weight:bold; margin-left:10px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
+    th, td { border:1px solid #ccc; padding:4px; text-align:left; }
+    .waste-row { display:flex; align-items:center; gap:5px; margin-bottom:5px; }
+    .remove-btn { background:red; font-weight:bold; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="left">
+    <h2>Waste Management – Form</h2>
+
+    <div class="row">
+      Date: <input type="date" id="date" value="<?= new Date().toISOString().slice(0,10) ?>">
+    </div>
+    <div class="row">
+      Full Name: <input type="text" id="name" required>
+    </div>
+    <div class="row">
+      Address: <input type="text" id="address" required oninput="checkLimits()">
+    </div>
+
+    <hr>
+    <h3>Waste (max 5 items)</h3>
+    <div id="waste"></div>
+
+    <button onclick="addRow()">➕ Add Waste</button>
+    <span class="warn" id="limitMessage"></span>
+    <br><br>
+    <button onclick="submitForm()">💾 Save</button>
+  </div>
+
+  <div class="right">
+    <h3>History by Address</h3>
+    <input type="text" id="searchAddress" placeholder="Enter address" oninput="searchByAddress()">
+    <table>
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Date</th>
+          <th>Waste Type</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const wasteTypes = [
+  'Tires','Textiles','Glass','Paper','Plastic','Paints',
+  'Bulky items','Construction waste','Styrofoam','Medicines','Batteries','Fluorescent tubes'
+];
+const units = ['pcs','bags 120l','m³'];
+
+function addRow() {
+  if (document.querySelectorAll('.waste-row').length >=5) return;
+
+  const div = document.createElement('div');
+  div.className = 'waste-row';
+
+  div.innerHTML = `
+    <select class="type">${wasteTypes.map(w=>`<option>${w}</option>`).join('')}</select>
+    <input type="number" class="qty" min="0" placeholder="quantity" oninput="checkLimits()">
+    <select class="unit">${units.map(u=>`<option>${u}</option>`).join('')}</select>
+    <button class="remove-btn" onclick="removeRow(this)">✖</button>
+  `;
+  document.getElementById('waste').appendChild(div);
+}
+
+function removeRow(btn) {
+  btn.parentElement.remove();
+  checkLimits();
+}
+
+addRow();
+
+// ===== CHECK LIMITS =====
+function checkLimits() {
+  const addressVal = document.getElementById('address').value.trim();
+  if(!addressVal) { document.getElementById('limitMessage').textContent=''; return; }
+
+  google.script.run.withSuccessHandler(totals=>{
+    let construction = totals.totalConstruction;
+    let tires = totals.totalTires;
+
+    document.querySelectorAll('.waste-row').forEach(r=>{
+      const type = r.querySelector('.type').value;
+      const qty = Number(r.querySelector('.qty').value) || 0;
+      const unit = r.querySelector('.unit').value;
+
+      if(type==='Construction waste' && (unit==='pcs'||unit==='bags 120l')) construction += qty;
+      if(type==='Tires') tires += qty;
+    });
+
+    let msg = '';
+    if(construction>20) msg += 'Construction waste limit exceeded! ';
+    if(tires>4) msg += 'Tires limit exceeded!';
+    document.getElementById('limitMessage').textContent = msg;
+
+  }).getTotalsForAddress(addressVal);
+}
+
+// ===== SUBMIT =====
+function submitForm() {
+  const data = {
+    date: document.getElementById('date').value,
+    name: document.getElementById('name').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    waste: []
+  };
+
+  document.querySelectorAll('.waste-row').forEach(r=>{
+    const type = r.querySelector('.type').value;
+    const qty = Number(r.querySelector('.qty').value);
+    const unit = r.querySelector('.unit').value;
+    if(type && qty>0) data.waste.push({type, qty, unit});
+  });
+
+  if(data.waste.length===0){ alert('Add at least one waste item.'); return; }
+
+  google.script.run
+    .withSuccessHandler(totals=>{
+      alert('Saved!\nConstruction waste: '+totals.totalConstruction+'\nTires: '+totals.totalTires);
+      document.getElementById('waste').innerHTML='';
+      addRow();
+      checkLimits();
+      searchByAddress();
+    })
+    .withFailureHandler(err=>alert('Error saving data:\n'+err.message))
+    .saveData(data);
+}
+
+// ===== SEARCH =====
+let timer=null;
+function searchByAddress(){
+  clearTimeout(timer);
+  const addr=document.getElementById('searchAddress').value.trim();
+  if(addr.length<3){ document.getElementById('results').innerHTML=''; return; }
+
+  timer=setTimeout(()=>{
+    google.script.run.withSuccessHandler(rows=>{
+      const results=document.getElementById('results');
+      results.innerHTML='';
+      rows.forEach(r=>{
+        const tr=document.createElement('tr');
+        tr.innerHTML=`<td>${r.name}</td><td>${r.date}</td><td>${r.type}</td><td>${r.qty}</td>`;
+        results.appendChild(tr);
+      });
+    }).searchByAddress(addr);
+  },300);
+}
+</script>
+
+</body>
+</html>
