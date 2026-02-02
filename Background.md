@@ -1,57 +1,52 @@
-🏗 Background / Motivation
+# 🏗 Background / Motivation
 
-This project was created to digitize the waste collection system, which was previously recorded manually on paper 📝. It serves as a waste tracking and reporting system for residents submitting waste to a selective waste collection point (PSZOK).
+This project was created to **digitize the waste collection system**, which was previously recorded manually on paper 📝. It serves as a **waste tracking and reporting system** for residents submitting waste to a selective waste collection point (PSZOK).  
 
-Goal: ⚡
+**Goal:** ⚡  
+- Automate record-keeping  
+- Streamline reporting  
+- Monitor limits  
+- Reduce repeated violations  
 
-Automate record-keeping
+---
 
-Streamline reporting
+## ❌ Problems with the previous system
 
-Monitor limits
+Before this project, the paper-based process was inefficient and prone to errors:  
 
-Reduce repeated violations
+- 🛑 **Difficulty enforcing limits** – Exceeding limits was often ignored, and tracking violators was slow.  
+- 📄 **High paper usage & slow processing** – Manual record-keeping was time-consuming and error-prone.  
+- 🔍 **Inefficient data retrieval** – Searching past submissions by resident or address was cumbersome.  
 
-❌ Problems with the previous system
+---
 
-Before this project, the paper-based process was inefficient and prone to errors:
+## ✅ How this system helps
 
-🛑 Difficulty enforcing limits – Exceeding limits was often ignored, and tracking violators was slow.
+- 👨‍💼 Municipal employees can quickly identify residents exceeding waste limits, which may result in financial penalties 💰.  
+- 🔒 Waste submissions are anonymized for general use, while municipal staff has controlled access to detailed records.  
+- 🧮 **Automatic calculations, conditional formatting, and search functionality** allow efficient monitoring of yearly limits.  
+- 📊 Historical data and reporting capabilities provide insights into the origins and volumes of waste, helping the municipality optimize resources and costs.  
 
-📄 High paper usage & slow processing – Manual record-keeping was time-consuming and error-prone.
+---
 
-🔍 Inefficient data retrieval – Searching past submissions by resident or address was cumbersome.
+## 🛠 Skills & Learnings
 
-✅ How this system helps
+Through creating this project, I gained experience in:  
 
-👨‍💼 Municipal employees can quickly identify residents exceeding waste limits, which may result in financial penalties 💰.
+- ⚙️ **Google Apps Script & Google Sheets integration**  
+- 🖥️ Designing dynamic, user-friendly forms  
+- 🗂️ Managing structured and anonymized data  
+- ✅ Implementing real-time validations and limit checks  
 
-🔒 Waste submissions are anonymized for general use, while municipal staff has controlled access to detailed records.
+---
 
-🧮 Automatic calculations, conditional formatting, and search functionality allow efficient monitoring of yearly limits.
+## ✨ Key Features Added Over Time
 
-📊 Historical data and reporting capabilities provide insights into the origins and volumes of waste, helping the municipality optimize resources and costs.
+- 📚 Dictionaries for waste types and units  
+- ➕ Multiple waste entry rows per submission  
+- 🔎 Search by address to check yearly limits  
+- 🖌️ Conditional formatting highlighting limit exceedances  
 
-🛠 Skills & Learnings
+---
 
-Through creating this project, I gained experience in:
-
-⚙️ Google Apps Script & Google Sheets integration
-
-🖥️ Designing dynamic, user-friendly forms
-
-🗂️ Managing structured and anonymized data
-
-✅ Implementing real-time validations and limit checks
-
-✨ Key Features Added Over Time
-
-📚 Dictionaries for waste types and units
-
-➕ Multiple waste entry rows per submission
-
-🔎 Search by address to check yearly limits
-
-🖌️ Conditional formatting highlighting limit exceedances
-
-💡 Impact: The system replaced inefficient paper-based logs, reduced errors, improved limit enforcement, and enabled reporting and analysis of waste collection trends.
+💡 **Impact:** The system replaced inefficient paper-based logs, reduced errors, improved limit enforcement, and enabled reporting and analysis of waste collection trends.
