@@ -1,33 +1,57 @@
 🏗 Background / Motivation
 
-This project was created to digitize the waste collection system, which was previously recorded manually on paper 📝. It serves as a waste tracking and reporting system for residents submitting waste to a selective waste collection point (PSZOK). The goal is to automate record-keeping, streamline reporting, monitor limits, and reduce repeated violations ⚡.
+This project was created to digitize the waste collection system, which was previously recorded manually on paper 📝. It serves as a waste tracking and reporting system for residents submitting waste to a selective waste collection point (PSZOK).
 
-Before this system, the paper-based process was inefficient and prone to errors ❌. Key issues included:
+Goal: ⚡
 
-🛑 Difficulty enforcing limits: Exceeding limits was often ignored, and tracking violators was slow.
+Automate record-keeping
 
-📄 High paper usage & slow processing: Manual record-keeping was time-consuming and error-prone.
+Streamline reporting
 
-🔍 Inefficient data retrieval: Searching past submissions by resident or address was cumbersome.
+Monitor limits
 
-With this system:
+Reduce repeated violations
+
+❌ Problems with the previous system
+
+Before this project, the paper-based process was inefficient and prone to errors:
+
+🛑 Difficulty enforcing limits – Exceeding limits was often ignored, and tracking violators was slow.
+
+📄 High paper usage & slow processing – Manual record-keeping was time-consuming and error-prone.
+
+🔍 Inefficient data retrieval – Searching past submissions by resident or address was cumbersome.
+
+✅ How this system helps
 
 👨‍💼 Municipal employees can quickly identify residents exceeding waste limits, which may result in financial penalties 💰.
 
 🔒 Waste submissions are anonymized for general use, while municipal staff has controlled access to detailed records.
 
-🧮 Automatic calculations, conditional formatting, and search functionality allow efficient monitoring of yearly limits and help manage waste collection costs.
+🧮 Automatic calculations, conditional formatting, and search functionality allow efficient monitoring of yearly limits.
 
-📊 Historical data and reporting capabilities provide insights into the origins and volumes of waste, helping the municipality optimize resource allocation.
+📊 Historical data and reporting capabilities provide insights into the origins and volumes of waste, helping the municipality optimize resources and costs.
 
-Through creating this project, I gained significant experience in Google Apps Script and Google Sheets integration ⚙️, designing dynamic and user-friendly forms 🖥️, managing structured data 🗂️, and implementing real-time validations ✅.
+🛠 Skills & Learnings
 
-The system evolved over time with additional features:
+Through creating this project, I gained experience in:
 
-📚 Dictionaries for waste types
+⚙️ Google Apps Script & Google Sheets integration
 
-➕ Multiple waste entry rows
+🖥️ Designing dynamic, user-friendly forms
 
-🔎 Search by address
+🗂️ Managing structured and anonymized data
 
-These improvements greatly enhanced efficiency and usability, making the system suitable not only for daily operations but also for reporting and monitoring waste limits throughout the year.
+✅ Implementing real-time validations and limit checks
+
+✨ Key Features Added Over Time
+
+📚 Dictionaries for waste types and units
+
+➕ Multiple waste entry rows per submission
+
+🔎 Search by address to check yearly limits
+
+🖌️ Conditional formatting highlighting limit exceedances
+
+💡 Impact: The system replaced inefficient paper-based logs, reduced errors, improved limit enforcement, and enabled reporting and analysis of waste collection trends.
